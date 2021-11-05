@@ -1,5 +1,5 @@
 n = 15; %nb des noeuds
-d = 300; %nb des itérations
+d = 40; %nb des itérations
 c = 1/(n+1);
 a = 200; %longueur de l'espace
 b = 150; %largeur de l'espace
@@ -117,9 +117,9 @@ function [x,y] = mouvement_sec(x,y,r_sec,C,n)
             xc = xc + (x(j)-x(i))*C(i,j);
             yc = yc + (y(j)-y(i))*C(i,j);
             
-            l= ((xc - x(i)).^2 + (yc - y(i)).^2).^(1/2);
+            l = ((xc - x(i)).^2 + (yc - y(i)).^2).^(1/2);
             
-            if l > 2*r_sec
+            if l > (1.5)*r_sec
                 x(i) = x(i) + (xc - x(i))*(r_sec/l);
                 y(i) = y(i) + (yc - y(i))*(r_sec/l);
 
@@ -169,7 +169,7 @@ function show_nodes_sec(C,x,y,r_sec,d,n)
        [x,y] = mouvement_sec(x,y,r_sec,C,n);
        %x
        %y
-       pause(0.02)
+       pause(0.2)
     end
 end
 
