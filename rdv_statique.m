@@ -166,9 +166,15 @@ end
 
 function show_nodes_sec(C,x,y,r_sec,d,n) %affichage du graphique qui contient l'animation des noeuds en utilisant le rayon de sécurité
     for i=1:d
-       scatter(x,y,'filled')
+        %cmap = colormap(jet(size(C,2)));
+        %cmap = cmap(randperm(length(cmap)),:)
+        %Set colororder and plot
+        %ax = axes('colororder',cmap)
+        %plot(x,y)
+
+       scatter(x,y,'filled','MarkerFaceColor',[0 .2 .7])
        for i=1:n
-           circle(x(i),y(i),2);
+           circle(x(i),y(i),3);
        end
        for i=1:n
             text (x(i),y(i),int2str(i))
@@ -180,12 +186,12 @@ function show_nodes_sec(C,x,y,r_sec,d,n) %affichage du graphique qui contient l'
     end
 end
 
-function h = circle(x,y,r)
+function h = circle(x,y,r)%fonction pour dessiner un cercle avec une couleur specifié
 hold on
 th = 0:pi/50:2*pi;
 xunit = r * cos(th) + x;
 yunit = r * sin(th) + y;
-h = plot(xunit, yunit);
+h = plot(xunit, yunit, 'r');
 hold off
 end
 %show_graph(M,n);
