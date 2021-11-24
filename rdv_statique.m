@@ -26,7 +26,7 @@ A = matCom(M,W);
 
 %show_nodes(M,W,x_agent,y_agent,d,n) %en respectant la distence de
 %detection entre agents
-show_nodes_sec(C,x_agent,y_agent,r_sec,d,n)%affichage du graphe en implementant
+show_nodes_sec(C,x_agent,y_agent,r_sec,d,n)%affichage du graphe en 
 
 %show_graph(M,n,d)
 
@@ -40,7 +40,7 @@ function mat = positionToAdjMatrix(x,y,r_det) %matrice d'adjacence qui contient 
     for i=1:n
         for j=1:n
             
-            dist_ij = ((x(i)-x(j)).^2 + (y(i)-y(j)).^2).^(1/2); %calcul de distence entre les agent
+            dist_ij = ((x(i)-x(j)).^2 + (y(i)-y(j)).^2).^(1/2); %calcul de distence entre les agents
             if dist_ij <= r_det
                 mat(i,j) = 1; %si distance entre les deux agents est inférieur au rayon de sécurité ajouter 1 en (i,j) et (j,i)
             end
@@ -85,15 +85,15 @@ function P = pMatrix(M,c,n)
 end
 
 function m = randStocastic(n)
-    matrix = rand (n,n)
+    matrix = rand (n,n) %generer une matrice de taille nxnaleatoire de valeur entre 0 et 1
     somme_facteur  = sum(matrix,2);
     for i=1:n
-        matrix(i,:) = matrix(i,:)/somme_facteur(i,:);
+        matrix(i,:) = matrix(i,:)/somme_facteur(i,:);%chaque ligne de la matrice est divisé par la somme des elements de la ligne
     end
     m = matrix;
 end
 
-function A = matCom(M,W) %matrice de communication à partir de la amatrice d'adjacence et la matrice de priorité
+function A = matCom(M,W) %matrice de communication à partir de la matrice d'adjacence et la matrice de priorité
 
     I = eye(length(M)); %matrice d'identite
     J = ones(length(M));%matrice qui contient des "1" partout
@@ -106,13 +106,13 @@ end
 function [x,y]  = mouvement(x,y,A,n) %couple de mouvements d'un agent
     for i=1:n 
         for j=1:n
-            x(i)= x(i)+(x(j)-x(i))*A(i,j);
-            y(i)= y(i)+(y(j)-y(i))*A(i,j);
+            x(i)= x(i)+(x(j)-x(i))*A(i,j); %deplacement elementaire sur l'axe des abscisses
+            y(i)= y(i)+(y(j)-y(i))*A(i,j); %deplacement elementaire sur l'axe des cordonnées
         end
     end
 end
 
-function [x,y] = mouvement_sec(x,y,r_sec,C,n) %retourne les coordonées de mouvement d'un agent 
+function [x,y] = mouvement_sec(x,y,r_sec,C,n) %retourne les coordonées de mouvement d'un agent en respectant le rayon de sécurité
     for i=1:n
         xc = x(i);
         yc = y(i);
@@ -123,7 +123,7 @@ function [x,y] = mouvement_sec(x,y,r_sec,C,n) %retourne les coordonées de mouvem
             
             l = ((xc - x(i)).^2 + (yc - y(i)).^2).^(1/2);
             
-            if l > (1.5)*r_sec
+            if l > (1.5)*r_sec %on fait un mouvement d'agent si la distance entre deux agents est superieur a 1.5*(rayon de sécurité)
                 x(i) = x(i) + (xc - x(i))*(r_sec/l);
                 y(i) = y(i) + (yc - y(i))*(r_sec/l);
 
@@ -132,7 +132,7 @@ function [x,y] = mouvement_sec(x,y,r_sec,C,n) %retourne les coordonées de mouvem
     end
 end
 
-function show_graph(adj,n)
+function show_graph(adj,n)%affichage du graphe en utilisant la matrice d'adjacence
     %rows = zeros(1,n*n);
     nodes = {};
     for i=1:n
@@ -149,22 +149,22 @@ function show_graph(adj,n)
     %plot(G);
 end
 
-function show_nodes(M,W,x,y,d,n)
+function show_nodes(M,W,x,y,d,n) %affichage du graphique qui contient l'animation des noeuds 
     for i=1:d
        A = matCom(M,W);
        show_graph(M,n)
        scatter(x,y,'filled')
        for i=1:n
-            text (x(i),y(i),int2str(i))
+            text(x(i),y(i),int2str(i))
        end
        [x,y] = mouvement(x,y,A,n);
        %x
        %y
-       pause(0.2)
+       pause(0.2) % 0.2secondes entre chqaue iteration
     end
 end
 
-function show_nodes_sec(C,x,y,r_sec,d,n)
+function show_nodes_sec(C,x,y,r_sec,d,n) %affichage du graphique qui contient l'animation des noeuds en utilisant le rayon de sécurité
     for i=1:d
        scatter(x,y,'filled')
        for i=1:n
