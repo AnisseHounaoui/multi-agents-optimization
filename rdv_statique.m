@@ -168,6 +168,9 @@ function show_nodes_sec(C,x,y,r_sec,d,n) %affichage du graphique qui contient l'
     for i=1:d
        scatter(x,y,'filled')
        for i=1:n
+           circle(x(i),y(i),2);
+       end
+       for i=1:n
             text (x(i),y(i),int2str(i))
        end
        [x,y] = mouvement_sec(x,y,r_sec,C,n);
@@ -177,8 +180,14 @@ function show_nodes_sec(C,x,y,r_sec,d,n) %affichage du graphique qui contient l'
     end
 end
 
-
-
+function h = circle(x,y,r)
+hold on
+th = 0:pi/50:2*pi;
+xunit = r * cos(th) + x;
+yunit = r * sin(th) + y;
+h = plot(xunit, yunit);
+hold off
+end
 %show_graph(M,n);
  
  %cols = find(M==1);
