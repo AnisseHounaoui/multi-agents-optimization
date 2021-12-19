@@ -1,15 +1,15 @@
 n = 15; %nombre d'agents (sommets de graphe)
-d = 40; %nombre d'itÈrations de mouvement des agents
+d = 40; %nombre d'it√©rations de mouvement des agents
 c = 1/(n+1); %constante
 a = 200; %longueur du plan
 b = 150; %largeur du plan
-r_det = ((((a.^2)+(b.^2)).^(1/2))/5)*2; %rayon de dÈtection (distance nÈcessaire entre deux agents ou plus pour qu'il Èchangent de l'information)
-r_sec = r_det/3; %rayon de sÈcuritÈ (distance minimale entre deux agents ou plus)
+r_det = ((((a.^2)+(b.^2)).^(1/2))/5)*2; %rayon de d√©tection (distance n√©cessaire entre deux agents ou plus pour qu'il √©changent de l'information)
+r_sec = r_det/3; %rayon de s√©curit√© (distance minimale entre deux agents ou plus)
 
-x_agent = randsample(double(0:5:a),n); %liste contenant les abscisses des agents (double(0:5:a) pour generer une liste de valeur de "0" ‡ "a" avec un espace de 5 entre les valeurs
+x_agent = randsample(double(0:5:a),n); %liste contenant les abscisses des agents (double(0:5:a) pour generer une liste de valeur de "0" √† "a" avec un espace de 5 entre les valeurs
                                  %randsample pour choisir "n" valeurs 
-                                 %de 0 a n avec 5 sÈparÈs)
-y_agent = randsample(double(0:5:b),n);%liste contenant les ordonnÈes des agents
+                                 %de 0 a n avec 5 s√©par√©s)
+y_agent = randsample(double(0:5:b),n);%liste contenant les ordonn√©es des agents
 
 M = positionToAdjMatrix(x_agent,y_agent,r_det); %matrice d'adjacence
 
@@ -18,10 +18,10 @@ P = pMatrix(M,c,n);%matrice de poids
 
 lap = Laplacienne(M,n);%matrice laplacienne
 
-W = randStocastic(n) %matrice de prioritÈ
+W = randStocastic(n) %matrice de priorit√©
 
 C = adjacentToCom(M,n) %matrice de communication a partir de la matrice d'adjacence
-A = matCom(M,W); %matrice de communication a partir de la matrice d'adjacence et de prioritÈ
+A = matCom(M,W); %matrice de communication a partir de la matrice d'adjacence et de priorit√©
 
 %show_nodes(M,W,x_agent,y_agent,d,n) %en respectant la distence de
                                      %detection entre agents
@@ -32,7 +32,7 @@ nexttile
 show_graph(M,n,d)
 
 nexttile
-show_nodes_sec(C,x_agent,y_agent,r_sec,d,n)%affichage du graphe en respectant le rayon de sÈcuritÈ
+show_nodes_sec(C,x_agent,y_agent,r_sec,d,n)%affichage du graphe en respectant le rayon de s√©curit√©
 %show_nodes(M,W,x_agent,y_agent,d,n)%en respectant la distence de
                                      %detection entre agents
                                      
@@ -52,7 +52,7 @@ function mat = positionToAdjMatrix(x,y,r_det) %matrice d'adjacence qui contient 
             
             dist_ij = ((x(i)-x(j)).^2 + (y(i)-y(j)).^2).^(1/2); %calcul de distence entre les agents
             if dist_ij <= r_det
-                mat(i,j) = 1; %si distance entre les deux agents est infÈrieur au rayon de sÈcuritÈ ajouter 1 en (i,j) et (j,i)
+                mat(i,j) = 1; %si distance entre les deux agents est inf√©rieur au rayon de s√©curit√© ajouter 1 en (i,j) et (j,i)
             end
         end
     end
@@ -60,7 +60,7 @@ function mat = positionToAdjMatrix(x,y,r_det) %matrice d'adjacence qui contient 
     
     
     for i=1:n
-        mat(i,i) = 0;%0 sinon car l'agent ne peut pas communiquer avec lui mÍme
+        mat(i,i) = 0;%0 sinon car l'agent ne peut pas communiquer avec lui m√™me
     end
 
     
@@ -69,12 +69,12 @@ end
 %############################################################################################
 
 function Laplacienne = Laplacienne(M,n)
-    D = eye(length(M)); %Matrice d'identitÈ
-    deg = sum(M,2);%vecteur colonne, chaque elemet de ce vecteur est la somme de la ligne correspondante dans la matrice de degrÈ
+    D = eye(length(M)); %Matrice d'identit√©
+    deg = sum(M,2);%vecteur colonne, chaque elemet de ce vecteur est la somme de la ligne correspondante dans la matrice de degr√©
                    %chaque element i represente le nombre des agents qui
                    %communique avec l'agent i
     for i=1:n
-       D(i,i) = deg(i); %matrice de degrÈe (chaque (i,j) contient le nombre de liens entre les noeuds i et j)
+       D(i,i) = deg(i); %matrice de degr√©e (chaque (i,j) contient le nombre de liens entre les noeuds i et j)
     end
     
     Laplacienne = D - M; %matrice laplacienne est la difference de la matrice de degree et la matrice d'adjacence
@@ -83,7 +83,7 @@ end
 %############################################################################################
 
 
-function C = adjacentToCom(M,n) %extraire la matrice de communication ‡ partir de la matrice d'adjacence
+function C = adjacentToCom(M,n) %extraire la matrice de communication √† partir de la matrice d'adjacence
     C(1:n,1:n) = M; %faire une copie de la matrice M
     fact = sum(M,2); 
     for i=1:n
@@ -96,10 +96,10 @@ end
 
 %############################################################################################
 
-function P = pMatrix(M,c,n)%c'est la matrice qui contient les poids qui seront attribuÈ au vecteur prioritÈ afin de calculer
-                           %la prioritÈ de la prochaine itÈration
+function P = pMatrix(M,c,n)%c'est la matrice qui contient les poids qui seront attribu√© au vecteur priorit√© afin de calculer
+                           %la priorit√© de la prochaine it√©ration
                            
-    I = eye(length(M)); % matrice identitÈ
+    I = eye(length(M)); % matrice identit√©
     L = Laplacienne(M,n); %matrice laplacienne
     P = I - c.*L; %matrice de poids
 end
@@ -110,14 +110,14 @@ function m = randStocastic(n)
     matrix = rand (n,n) %generer une matrice de taille nxn aleatoire de valeur entre 0 et 1
     somme_facteur  = sum(matrix,2);
     for i=1:n
-        matrix(i,:) = matrix(i,:)/somme_facteur(i,:);%chaque ligne de la matrice est divisÈ par la somme des elements de la ligne
+        matrix(i,:) = matrix(i,:)/somme_facteur(i,:);%chaque ligne de la matrice est divis√© par la somme des elements de la ligne
     end
     m = matrix;
 end
 
 %############################################################################################
 
-function A = matCom(M,W) %matrice de communication ‡ partir de la matrice d'adjacence et la matrice de prioritÈ
+function A = matCom(M,W) %matrice de communication √† partir de la matrice d'adjacence et la matrice de priorit√©
 
     I = eye(length(M)); %matrice d'identite
     J = ones(length(M));%matrice qui contient des "1" partout
@@ -133,14 +133,14 @@ function [x,y]  = mouvement(x,y,A,n) %couple de mouvements d'un agent
     for i=1:n 
         for j=1:n
             x(i)= x(i)+(x(j)-x(i))*A(i,j); %deplacement elementaire sur l'axe des abscisses
-            y(i)= y(i)+(y(j)-y(i))*A(i,j); %deplacement elementaire sur l'axe des cordonnÈes
+            y(i)= y(i)+(y(j)-y(i))*A(i,j); %deplacement elementaire sur l'axe des cordonn√©es
         end
     end
 end
 
 %############################################################################################
 
-function [x,y] = mouvement_sec(x,y,r_sec,C,n) %retourne les coordonÈes de mouvement d'un agent en respectant le rayon de sÈcuritÈ
+function [x,y] = mouvement_sec(x,y,r_sec,C,n) %retourne les coordon√©es de mouvement d'un agent en respectant le rayon de s√©curit√©
     for i=1:n
         xc = x(i);
         yc = y(i);
@@ -151,9 +151,9 @@ function [x,y] = mouvement_sec(x,y,r_sec,C,n) %retourne les coordonÈes de mouvem
             
             l = ((xc - x(i)).^2 + (yc - y(i)).^2).^(1/2);%calcul de distence entre l'agent i et j
             
-            if l > r_sec %on fait un mouvement d'agent si la distance entre les deux agents est superieur a 1.5*(rayon de sÈcuritÈ)
-                x(i) = x(i) + (xc - x(i))*(r_sec/l);%deplacement de l'agent en abscisse avec une distance Ègale (xc - x(i))*(r_sec/l)
-                y(i) = y(i) + (yc - y(i))*(r_sec/l);%deplacement de l'agent en ordonnÈ avec une distance Ègale (yc - y(i))*(r_sec/l)
+            if l > r_sec %on fait un mouvement d'agent si la distance entre les deux agents est superieur a 1.5*(rayon de s√©curit√©)
+                x(i) = x(i) + (xc - x(i))*(r_sec/l);%deplacement de l'agent en abscisse avec une distance √©gale (xc - x(i))*(r_sec/l)
+                y(i) = y(i) + (yc - y(i))*(r_sec/l);%deplacement de l'agent en ordonn√© avec une distance √©gale (yc - y(i))*(r_sec/l)
 
             end
         end
@@ -166,7 +166,7 @@ function show_graph(adj,n,d)%affichage du graphe en utilisant la matrice d'adjac
     %rows = zeros(1,n*n);
     nodes = {};
     for i=1:n
-        nodes{i} = int2str(i);%numÈroter les noeuds de 1 ‡ n
+        nodes{i} = int2str(i);%num√©roter les noeuds de 1 √† n
     end
     G = graph(adj,nodes);
     plot(G);
@@ -201,7 +201,7 @@ end
 %############################################################################################
 
 function show_nodes_sec(C,x,y,r_sec,d,n)%affichage du graphique qui contient l'animation des noeuds en utilisant 
-                                        %le rayon de sÈcuritÈ
+                                        %le rayon de s√©curit√©
     for i=1:d
         %cmap = colormap(jet(size(C,2)));
         %cmap = cmap(randperm(length(cmap)),:)
@@ -222,7 +222,7 @@ function show_nodes_sec(C,x,y,r_sec,d,n)%affichage du graphique qui contient l'a
        title('Probleme de Rendez-Vous')
        xlabel('x-values')
        ylabel('y-values')
-       legend('agent','rayon de sÈcuritÈ')
+       legend('agent','rayon de s√©curit√©')
        pause(0.02)
        
 
@@ -232,7 +232,7 @@ end
 
 %############################################################################################
 
-function h = circle(x,y,r)%fonction pour dessiner un cercle avec une couleur specifiÈ
+function h = circle(x,y,r)%fonction pour dessiner un cercle avec une couleur specifi√©
 hold on
 th = 0:pi/50:2*pi;
 xunit = r * cos(th) + x;
