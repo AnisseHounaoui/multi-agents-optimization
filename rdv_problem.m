@@ -4,7 +4,7 @@ c = 1/(n+1); %constante
 a = 200; %longueur du plan
 b = 150; %largeur du plan
 r_det = ((((a.^2)+(b.^2)).^(1/2))/5)*2; %rayon de détection (distance nécessaire entre deux agents ou plus pour qu'il échangent de l'information)
-r_sec = r_det/3; %rayon de sécurité (distance minimale entre deux agents ou plus)
+r_sec = r_det/10; %rayon de sécurité (distance minimale entre deux agents ou plus)
 
 x_agent = randsample(double(0:5:a),n); %liste contenant les abscisses des agents (double(0:5:a) pour generer une liste de valeur de "0" à "a" avec un espace de 5 entre les valeurs
                                  %randsample pour choisir "n" valeurs 
@@ -240,7 +240,9 @@ yunit = r * sin(th) + y;
 h = plot(xunit, yunit, 'r');
 hold off
 end
-%show_graph(M,n);
+
+%#########################################
+%show_graph(M,n); %methode personnalisé (en details) pour afficher le graphe
  
  %cols = find(M==1);
     %cols;
